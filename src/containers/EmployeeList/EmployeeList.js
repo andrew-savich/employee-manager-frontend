@@ -6,10 +6,8 @@ import {useNavigate, useLocation} from 'react-router-dom';
 
 const EmployeeList = () => {
     const [employees, setEmployees] = useState([]);
-    console.log("employees: ", employees);
     const navigate = useNavigate();
     const currentPath = useLocation().pathname;
-
 
     useEffect(() => {
         const init = async () => {
@@ -28,15 +26,21 @@ const EmployeeList = () => {
         navigate(currentPath + "/add");
     };
 
+    const editEmployeeHandler = id => {
+        navigate(currentPath + "/edit/" + id);
+    };
+
     return (
         <div className="container">
             <h2 className="text-center">Employee List</h2>
-            
             <Button className="btn btn-primary" onClick={addEmployeeHandler} title="Add employee" />
 
             <Table
                 entities={employees}
-                actions={[<Button title="Edit" className="btn btn-outline-primary"/>]}
+                action={ {
+                    title: "Edit",
+                    handler: editEmployeeHandler
+                }}
             />
             
         </div>

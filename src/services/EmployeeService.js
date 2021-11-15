@@ -24,6 +24,14 @@ class EmployeeService {
         return axios.get(EMPLOYEE_API_BASE_URL + '/get/' + employeeId);
     }
 
+    getEmployeeGenders(){
+        return axios.get(EMPLOYEE_API_BASE_URL + '/genders');
+    }
+
+    getEmployeeDepartments(){
+        return axios.get(EMPLOYEE_API_BASE_URL + '/departments');
+    }
+
 }
 
 export default new EmployeeService();

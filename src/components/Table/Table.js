@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { camelCaseToNormalWords, getColumnNamesFromEntityKeys } from '../../utils/Utils';
+import { Button } from '../Button/Button';
 
 const Table = props => {
     const [columnNames, setColumnNames] = useState([]);
-
+    
     useEffect(() => {
 
-        if(props.entities.length != 0){
+        if(props.entities.length !== 0){
             const columns = getColumnNamesFromEntityKeys(props.entities[0]);
-            console.log("columns: ", columns);
 
             let rightColumnNames = [];
 
-            columns.map(column => {
+            columns.forEach(column => {
                 rightColumnNames.push(camelCaseToNormalWords(column));
             });
 
@@ -23,8 +23,14 @@ const Table = props => {
 
     }, [props]);
 
+    const renderAction = (action, id) => {
+        return(
+            <td><Button title={action.title} className="btn btn-outline-primary" onClick={() => action.handler(id)} /></td>
+        )
+    };
+
     return (
-        <table className="table">
+        <table className="table table-hover">
             <thead>
                 <tr>
                     {columnNames.map((column, index) => <th key={ index + column } > {column} </th>)}
@@ -40,7 +46,7 @@ const Table = props => {
                                 <td key = {Math.random() + index}> { entity[field] } </td>
 
                             )}
-                            <td>{props.actions}</td>
+                            { props.action && renderAction(props.action, entity.id) }
                         </tr>
                     )
                 }
